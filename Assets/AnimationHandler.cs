@@ -18,8 +18,11 @@ public class AnimationHandler : MonoBehaviour
 
      void Update()
     {
-       
 
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            transform.parent.GetChild(3).GetComponent<ChatGPT>().GoSound("yaha aana hai to jaldi aao mai yaha pe hu , aur mushe bacha lo , vrna yaha pe mushe mar denge");
+        }
 
 
 

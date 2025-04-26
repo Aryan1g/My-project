@@ -110,7 +110,7 @@ namespace OpenAI
         public string apiKey = "sk_a88aa74875d1b2688354190c176c2cb1232ebae805fb59b4";
         public string voiceID = "9BWtsMINqrJLrRacOk9x"; // Example: "21m00Tcm4TlvDq8ikWAM"
 
-        public string ttvoice = "hi-IN-AaravNeural";
+        public string ttvoice;
 
 
 

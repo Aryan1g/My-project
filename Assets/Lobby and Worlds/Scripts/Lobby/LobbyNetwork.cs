@@ -702,8 +702,11 @@ namespace FirstGearGames.LobbyAndWorld.Lobbies
         [TargetRpc]
         private void TargetCreateRoomSuccess(NetworkConnection conn, RoomDetails roomDetails)
         {
+            Mnageble mnageble = FindAnyObjectByType<Mnageble>();
+            mnageble.onRoomNilCreated();
             CurrentRoom = roomDetails;
             LobbyCanvases.JoinCreateRoomCanvas.ShowRoomCreatedSuccess(roomDetails);
+
             //Also send member joined to self.
             MemberJoined(InstanceFinder.ClientManager.Connection.FirstObject);
         }
@@ -865,6 +868,8 @@ namespace FirstGearGames.LobbyAndWorld.Lobbies
         [TargetRpc]
         private void TargetJoinRoomSuccess(NetworkConnection conn, RoomDetails roomDetails)
         {
+            Mnageble mnageble = FindAnyObjectByType<Mnageble>();
+            mnageble.onRoomNilCreated();
             CurrentRoom = roomDetails;
             LobbyCanvases.JoinCreateRoomCanvas.ShowRoomJoinedSuccess(roomDetails);
         }

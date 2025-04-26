@@ -454,6 +454,7 @@ MonoBehaviour:
   recivervoicesource: {fileID: 9211182896306736773}
   apiKey: sk_c61754881a1ac0aee14838447dea9fe34d411c3168d5a0e3
   voiceID: m5qndnI7u4OAdXhH0Mr5
+  ttvoice: 
 --- !u!114 &5558250486738875685
 MonoBehaviour:
   m_ObjectHideFlags: 0

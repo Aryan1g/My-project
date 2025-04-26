@@ -127,9 +127,11 @@ namespace FirstGearGames.LobbyAndWorld.Lobbies.JoinCreateRoomCanvases
             if (_awaitingCreateResponse)
                 return;
 
-            string roomName = _nameText.text.Trim();
+            // string roomName = _nameText.text.Trim();
+            string roomName = "ava";
             string password = _passwordText.text;
-            string avatarurl = _avatarurl.text.Trim();
+            //   string avatarurl = _avatarurl.text.Trim();
+            string avatarurl = "https://models.readyplayer.me/680b83da2c0e4a08e38de755.glb";
             int playerCount = ConvertPlayerCount(_playerCount.captionText.text);
             string failedReason = string.Empty;
             //If cannot create,

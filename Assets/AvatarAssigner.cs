@@ -96,7 +96,7 @@ public class AvatarAssigner : NetworkBehaviour
               //  avatar.AddComponent<FaceActor>();
                 var gpt = transform.GetComponentInChildren<ChatGPT>();
                 gpt.enabled = true;
-           //     gpt.ttvoice = "hi-IN-AaravNeural";
+                gpt.ttvoice = "hi-IN-AaravNeural";
                 gpt.isclintactive = true;
               
                 avatar.transform.localScale = new Vector3(0.95f, 0.95f, 0.95f);
@@ -116,7 +116,7 @@ public class AvatarAssigner : NetworkBehaviour
                 avatar.AddComponent<AnimationHandler>();
                 var gpt = transform.GetComponentInChildren<ChatGPT>();
                 gpt.enabled = true;
-             //   gpt.ttvoice = "hi-IN-AartiNeural";
+                gpt.ttvoice = "hi-IN-AartiNeural";
                 gpt.isclintactive = true;
 
 

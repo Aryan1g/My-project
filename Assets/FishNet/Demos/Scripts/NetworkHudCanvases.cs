@@ -1,5 +1,7 @@
 ﻿using FishNet.Managing;
 using FishNet.Transporting;
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -62,11 +64,34 @@ namespace FishNet.Example
         private Image _clientIndicator;
         #endregion
 
+        [SerializeField] private float _connectionTimeout = 10f;
+        [SerializeField] private float _sceneLoadTimeout = 10f;
+        [SerializeField] private float _roomCreationTimeout = 10f;
+
+        [Header("Scene Names")]
+        [SerializeField] private string _lobbyScene = "Lobby";
+        [SerializeField] private string _worldScene = "World";
+
+      
+
+
+
+        private bool _isRoomCreated = false;
+
+
+
+
+
+
         #region Private.
         /// <summary>
         /// Found NetworkManager.
         /// </summary>
         private NetworkManager _networkManager;
+
+        
+
+
         /// <summary>
         /// Current state of client socket.
         /// </summary>
@@ -139,11 +164,26 @@ namespace FishNet.Example
             _clientIndicator.transform.gameObject.SetActive(false);
 #endif
 
-            _networkManager = FindObjectOfType<NetworkManager>();
-            if (_networkManager == null)
+            StartCoroutine(AutoStartConnections());
+
+          
+        }
+
+        private IEnumerator AutoStartConnections()
+        {
+            _networkManager = FindAnyObjectByType<NetworkManager>();
+
+            float networkManagerWaitTime = 0f;
+            while(_networkManager == null && networkManagerWaitTime < _connectionTimeout)
+            {
+                networkManagerWaitTime += Time.deltaTime;
+                yield return null;
+            }
+
+           if (_networkManager == null)
             {
                 Debug.LogError("NetworkManager not found, HUD will not function.");
-                return;
+                yield break;
             }
             else
             {
@@ -154,11 +194,68 @@ namespace FishNet.Example
             }
 
             if (_autoStartType == AutoStartType.Host || _autoStartType == AutoStartType.Server)
+            {
                 OnClick_Server();
-            if (!Application.isBatchMode && (_autoStartType == AutoStartType.Host || _autoStartType == AutoStartType.Client))
-                OnClick_Client();
-        }
+                float serverStartTime = 0f;
 
+                while (_serverState != LocalConnectionState.Started && serverStartTime < _connectionTimeout)
+                {
+                    serverStartTime += Time.deltaTime;
+                    yield return null;
+                }
+
+                if (_serverState != LocalConnectionState.Started)
+                {
+
+                    Debug.LogError($"Server failed to start after {_connectionTimeout}s!");
+                     yield break;
+
+                }
+
+
+            }
+               
+                
+
+
+
+
+            if (!Application.isBatchMode && (_autoStartType == AutoStartType.Host || _autoStartType == AutoStartType.Client))
+            {
+                OnClick_Client();
+                 float clientConnectTime = 0f;
+                while(_clientState != LocalConnectionState.Started &&  clientConnectTime < _connectionTimeout)
+                {
+                    clientConnectTime += Time.deltaTime;
+                    yield return null;
+                }
+
+                if(_clientState != LocalConnectionState.Started)
+                {
+                    Debug.LogError($"Client failed to connect after {_connectionTimeout}s!");
+                    yield break;
+                }
+
+
+
+
+
+
+
+            }
+
+
+
+           
+
+
+
+
+
+               
+
+
+        }
 
         private void OnDestroy()
         {
